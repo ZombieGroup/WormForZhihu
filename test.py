@@ -72,8 +72,6 @@ def test():
             answer.to_md()
 
 def main():
-    url = "http://www.zhihu.com/question/24269892"
-    question_test(url)
     keyword = '屠呦呦'
     search_test(keyword)
 
