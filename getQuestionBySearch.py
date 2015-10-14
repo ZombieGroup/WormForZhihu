@@ -52,7 +52,7 @@ class Search:
         if self.search_type != 'question':
             return False
         else:
-            question_list = self.soup.find_all("a", class_="question-link")
+            question_list = self.soup.find_all("a", class_="question-link")["href"]
             questions = []
             for i in question_list:
                 question = i.contents[0].encode("utf-8").replace("\n", "")
@@ -65,7 +65,7 @@ class Search:
         if self.search_type != 'people':
             return False
         else:
-            people_list = self.soup.find_all("a", class_="name-link")
+            people_list = self.soup.find_all("a", class_="name-link")["href"]
             peoples = []
             for i in people_list:
                 people = i.contents[0].encode("utf-8").replace("\n", "")
@@ -78,7 +78,7 @@ class Search:
         if self.search_type != 'topic':
             return False
         else:
-            topic_list = self.soup.find_all("a", class_="name-link")
+            topic_list = self.soup.find_all("a", class_="name-link")["href"]
             topics = []
             for i in topic_list:
                 topic = i.contents[0].encode("utf-8").replace("\n", "")
