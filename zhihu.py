@@ -109,6 +109,9 @@ class Question:
         r = requests.get(self.url)
         self.soup = BeautifulSoup(r.content)
 
+    def get_question_id(self):
+        return self.url[len(self.url)-7:len(self.url)]
+
     def get_title(self):
         if hasattr(self, "title"):
             if platform.system() == 'Windows':
@@ -212,7 +215,6 @@ class Question:
                             upvote = int(count[0:(len(count) - 1)]) * 10000
                         else:
                             upvote = int(count)
-
                         answer_url = "http://www.zhihu.com" + soup.find_all("a", class_="answer-date-link")[j]["href"]
 
                         answer = soup.find_all("div", class_=" zm-editable-content clearfix")[j - error_answer_count]
@@ -318,6 +320,8 @@ class Question:
             self.parser()
         soup = self.soup
         return int(soup.find("meta", itemprop="visitsCount")["content"])
+
+
 
 
 class User:
@@ -620,6 +624,9 @@ class Answer:
         r = requests.get(self.answer_url)
         soup = BeautifulSoup(r.content)
         self.soup = soup
+
+    def get_answer_id(self):
+        return self.answer_url[len(self.answer_url)-7:len(self.answer_url)]
 
     def get_question(self):
         if hasattr(self, "question"):
@@ -1017,13 +1024,13 @@ class Search:
         r = requests.get(self.search_url)
         self.soup = BeautifulSoup(r.content)
 
-    def getSearchURL(self):
+    def get_search_url(self):
         urlhead='http://www.zhihu.com/search?type='
         search_url = urlhead + self.search_type + '&q=' + self.keyword
         self.search_url = search_url
         return search_url
 
-    def getQuestions(self):
+    def get_questions(self):
         if self.search_type != 'question':
             return False
         else:
@@ -1034,7 +1041,7 @@ class Search:
                 questions.append(question_url)
             return questions
 
-    def getPeoples(self):
+    def get_peoples(self):
         if self.search_type != 'people':
             return False
         else:
@@ -1045,7 +1052,7 @@ class Search:
                 peoples.append(people_url)
             return peoples
 
-    def getTopics(self):
+    def get_topics(self):
         if self.search_type != 'topic':
             return False
         else:
