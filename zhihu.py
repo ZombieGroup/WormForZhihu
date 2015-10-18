@@ -1062,3 +1062,7 @@ class Search:
                 topic_url = "http://www.zhihu.com"+topic["href"]
                 topics.append(topic_url)
             return topics
+
+#to be continue
+#class Topic:
+#    def __init__(self):

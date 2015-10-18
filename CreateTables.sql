@@ -6,7 +6,12 @@ create table Users(
 	thanks_num int,
 	asks_num int,
 	answers_num int,
-	collections_num int
+	collections_num int,
+	education varchar(50),
+	education_extra varchar(50),
+	location varchar(50),
+	business varchar(50),
+	employment varchar(50)
 );
 
 create table Questions(
@@ -20,7 +25,10 @@ create table Questions(
 );
 
 create table Topic(
-	topic_name varchar(20) primary key
+	topic_id char(10) primary key,
+	topic_name varchar(20),
+	question_num int,
+	followers_num int
 );
 
 create table Answers(
@@ -32,6 +40,14 @@ create table Answers(
 	visit_times int,
 	foreign key (question_ID) references Questions(question_ID),
 	foreign key (author_ID) references Users(user_ID)
+);
+
+create table Comment(
+	author_ID char(8),
+	answer_ID char(8),
+	primary key (author_ID, answer_ID),
+	foreign key (author_ID) references Users(user_ID),
+	foreign key (answer_ID) references Answers(answer_ID)
 );
 
 create table Collection(
@@ -56,11 +72,28 @@ create table Follow_User(
 	primary key (followee_ID, follower_ID)
 );
 
+create table Follow_Topic(
+	follower_id char(8),
+	topic_id char(8),
+	foreign key (follower_id) references Users(user_ID),
+	foreign key (topic_id) references Topic(topic_id),
+	primary key (follower_id, topic_id)
+);
+
 create table Question_Topics(
-	question_ID char,
-	topic_name varchar(20),
+	question_ID char(8),
+	topic_id char(8),
 	foreign key (question_ID) references Questions(question_ID),
-	foreign key (topic_name) references Topic(topic_name)
+	foreign key (topic_id) references Topic(topic_id),
+	primary key (question_ID, topic_id)
+);
+
+create table Vote_Answer(
+	voter_id char(8),
+	answer_id char(8),
+	foreign key (voter_id) references Users(user_ID),
+	foreign key (answer_id) references Answers(answer_id),
+	primary key (voter_id, answer_id)
 );
 
 create table Collection_Answers(
