@@ -37,7 +37,7 @@ class PutInDB:
         cursor.execute("insert into Questions values(%s, %s, %s, %d, %d)" % id,'00000000' , detail, title, answer_num, followers_num)
         for topic in topics:
             topic_id = topic.get_topic_id
-            cursor.execute("insert into Question_Topics values(%s, %s)" % )
+            cursor.execute("insert into Question_Topics values(%s, %s)" % topic_id, id)
         cursor.close()
         self.connect.commit()
 
